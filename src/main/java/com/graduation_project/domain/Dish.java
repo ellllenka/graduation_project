@@ -1,9 +1,10 @@
 package com.graduation_project.domain;
 
-import org.springframework.data.annotation.Id;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -13,10 +14,14 @@ import javax.persistence.GeneratedValue;
 @Entity
 public class Dish {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotEmpty
+    //@Column(name = "name", nullable = false)
     private String name;
-    private int prise;
+    @NotNull
+    @Length(min = 1, max = 4)
+    private int price;
 
     public Dish() {
     }
@@ -37,17 +42,17 @@ public class Dish {
         this.name = name;
     }
 
-    public int getPrise() {
-        return prise;
+    public int getPrice() {
+        return price;
     }
 
-    public void setPrise(int prise) {
-        this.prise = prise;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public Dish(String name, int prise) {
         this.name = name;
-        this.prise = prise;
+        this.price = prise;
     }
 
     @Override
@@ -55,7 +60,7 @@ public class Dish {
         return "Dish{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", prise=" + prise +
+                ", prise=" + price +
                 '}';
     }
 }

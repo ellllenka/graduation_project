@@ -1,23 +1,39 @@
 package com.graduation_project.domain;
 
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
 import java.util.Set;
 
 /**
  * Created by elena on 30.03.16.
  */
+//@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotEmpty
+    //@Column(name = "name", nullable = false)
     private String name;
+    //@Column(name = "email", nullable = false, unique = true)
+    @Email
+    @NotEmpty
     private String email;
+    //@Column(name = "password", nullable = false)
+    @NotEmpty
+    @Length(min = 5)
     private String password;
+
+//    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+//    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
     protected Set<Role> roles;
 
     public User() {

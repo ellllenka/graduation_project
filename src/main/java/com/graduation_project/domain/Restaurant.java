@@ -1,34 +1,32 @@
 package com.graduation_project.domain;
 
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
 
 /**
  * Created by elena on 30.03.16.
  */
+//@Table(name = "restaurants")
 @Entity
 public class Restaurant {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotEmpty
+    //@Column(name = "name", nullable = false)
     private String name;
-    private LocalDate date;
-    Map<LocalDate, List<Dish>> menu = new HashMap<>();
-    //Map<String, Map<LocalDate, List<Dish>>> restaurants = new HashMap<>();
+    @OneToOne
+    private Menu menu;
 
-    public Restaurant() {
+    public Restaurant(String name, Menu menu) {
+        this.name = name;
+        this.menu = menu;
     }
 
-    public Restaurant(String name, LocalDate date) {
-        this.name = name;
-        this.date = date;
+    public Restaurant() {
     }
 
     public int getId() {
@@ -47,12 +45,21 @@ public class Restaurant {
         this.name = name;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Menu getMenu() {
+        return menu;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", menu=" + menu +
+                '}';
     }
 }
 
