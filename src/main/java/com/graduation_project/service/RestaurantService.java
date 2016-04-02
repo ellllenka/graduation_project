@@ -15,20 +15,24 @@ public class RestaurantService {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    private Integer addRestaurant(Restaurant restaurant){    //input a restaurant
+    public Restaurant getRestaurant (Integer id){
+        return restaurantRepository.findOne(id);
+    }
+
+    public Integer addRestaurant(Restaurant restaurant){    //input a restaurant
         restaurantRepository.save(restaurant);
         return restaurant.getId();
     }
 
-    private void updateRestaurant(Restaurant restaurant){
+    public void updateRestaurant(Restaurant restaurant){
         restaurantRepository.save(restaurant);
     }
 
-    private void deleteRestaurant(Integer id){
+    public void deleteRestaurant(Integer id){
         restaurantRepository.delete(id);
     }
 
-    private Page<Restaurant> findAll(Pageable pageable){
+    public Page<Restaurant> findAll(Pageable pageable){
         Page<Restaurant> restaurantPage = restaurantRepository.findAll(pageable);
         return restaurantPage;
     }

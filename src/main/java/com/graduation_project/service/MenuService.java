@@ -15,20 +15,24 @@ public class MenuService {
     @Autowired
     private MenuRepository menuRepository;
 
-    private Integer addMenu(Menu menu){    //input lunch menu of the day
+    public Menu getMenu (Integer id){
+        return menuRepository.findOne(id);
+    }
+
+    public Integer addMenu(Menu menu){    //input lunch menu of the day
         menuRepository.save(menu);
         return menu.getId();
     }
 
-    private void updateMenu(Menu menu){
+    public void updateMenu(Menu menu){
         menuRepository.save(menu);
     }
 
-    private void deleteMenu(Integer id){
+    public void deleteMenu(Integer id){
         menuRepository.delete(id);
     }
 
-    private Page<Menu> findAll(Pageable pageable){
+    public Page<Menu> findAll(Pageable pageable){
         Page<Menu> menuPage = menuRepository.findAll(pageable);
         return menuPage;
     }

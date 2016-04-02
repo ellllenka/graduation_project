@@ -15,20 +15,24 @@ public class DishService {
     @Autowired
     private DishRepository dishRepository;
 
-    private Integer addDish(Dish dish){
+    public Dish getDish (Integer id){
+        return dishRepository.findOne(id);
+    }
+
+    public Integer addDish(Dish dish){
         dishRepository.save(dish);
         return dish.getId();
     }
 
-    private void updateDish(Dish dish){
+    public void updateDish(Dish dish){
         dishRepository.save(dish);
     }
 
-    private void deleteDish(Integer id){
+    public void deleteDish(Integer id){
         dishRepository.delete(id);
     }
 
-    private Page<Dish> findAll(Pageable pageable){
+    public Page<Dish> findAll(Pageable pageable){
         Page<Dish> dishPage = dishRepository.findAll(pageable);
         return dishPage;
     }
